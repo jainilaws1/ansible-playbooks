@@ -76,11 +76,7 @@
           private_route_table: "{{ ec2_vpc_route_table_facts_result.route_tables | first }}"
       when: provider == 'aws'
 	  - name: "Install GPGv2"
-	    apt:
-		  name:
-		    - gnupg2
-		  state: latest
-    
+	    apt: name=gnupg2 state=present
     - block:
       - name: Set OpenStack cedentials
         set_fact:
