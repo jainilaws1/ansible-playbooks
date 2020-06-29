@@ -75,8 +75,7 @@
       - set_fact:
           private_route_table: "{{ ec2_vpc_route_table_facts_result.route_tables | first }}"
       when: provider == 'aws'
-	  - name: "Install GPGv2"
-	    apt: name=gnupg2 state=present
+	  
     - block:
       - name: Set OpenStack cedentials
         set_fact:
@@ -125,7 +124,8 @@
                 bosh_private_key={{ user_result.ssh_key_file | default('/root/.ssh/id_rsa') }}
 
     - include: proxy.yml
-
+- name: "Install GPGv2"
+  apt: name=gnupg2 state=present
 - name: Install BOSH
   hosts: jump-boxes
   pre_tasks:
