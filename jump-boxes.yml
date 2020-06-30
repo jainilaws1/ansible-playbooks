@@ -122,17 +122,17 @@
       set_fact: bosh_default_key_name={{ key_name | mandatory }}
                 bosh_private_key={{ user_result.ssh_key_file | default('/root/.ssh/id_rsa') }}
 
-    - include: proxy.yml
-- name: "Install GPGv2"
-  apt: name=gnupg2 state=present
-- name: "Update current GPG to GPGV2"
-  shell: 
-    cmd: ln -fs /usr/bin/gpg2 /usr/bin/gpg
+    - include: proxy.yml  
 - name: Install BOSH
   hosts: jump-boxes
   pre_tasks:
     # https://github.com/rvm/rvm/issues/3509
     # http://www.nokogiri.org/tutorials/installing_nokogiri.html#ubuntu___debian
+    - name: "Install GPGv2"
+      apt: name=gnupg2 state=present
+    - name: "Update current GPG to GPGV2"
+        shell: 
+          cmd: ln -fs /usr/bin/gpg2 /usr/bin/gpg
     - name: Install libgmp
       apt: name=libgmp-dev state=present
       become: yes
